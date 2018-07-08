@@ -14,7 +14,6 @@ const id2String = o => {
   o._id = o._id.toString();
   return o;
 };
-const dbc = {};
 const init = async () => {
   try {
     const c = await MongoClient.connect(MONGO_URL, { useNewUrlParser: true });
