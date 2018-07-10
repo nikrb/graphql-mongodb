@@ -5,9 +5,12 @@ const bodyParser = require('body-parser');
 const {graphqlExpress, graphiqlExpress} = require('graphql-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const URL = 'http://localhost';
 const PORT = process.env.PORT || 3001;
-const MONGO_URL = 'mongodb://localhost:27017';
 const DB_NAME = 'blog';
 
 const id2String = o => {
@@ -16,7 +19,8 @@ const id2String = o => {
 };
 const init = async () => {
   try {
-    const c = await MongoClient.connect(MONGO_URL, { useNewUrlParser: true });
+    const c = await MongoClient.connect(process.env.MONGO_URI,
+      { useNewUrlParser: true });
     const db = c.db(DB_NAME);
     const Posts = db.collection('posts');
     const Comments = db.collection('comments');
