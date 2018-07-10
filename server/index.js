@@ -11,7 +11,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 const URL = 'http://localhost';
 const PORT = process.env.PORT || 3001;
-const DB_NAME = 'blog';
 
 const id2String = o => {
   o._id = o._id.toString();
@@ -21,7 +20,7 @@ const init = async () => {
   try {
     const c = await MongoClient.connect(process.env.MONGO_URI,
       { useNewUrlParser: true });
-    const db = c.db(DB_NAME);
+    const db = c.db(process.env.DB_NAME);
     const Posts = db.collection('posts');
     const Comments = db.collection('comments');
     const typeDefs = `
